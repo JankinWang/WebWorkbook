@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scroll Watch</title>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    #scrollParent {
+      width: 300px;
+      height: 300px;
+      background-color: #333;
+      overflow-y: auto;
+      position: relative;
+      margin: 130px;
+    }
+
+    .box {
+      position: relative;
+    }
+
+    .box::before,
+    .box::after {
+      content: '';
+      width: 100%;
+      height: 100px;
+      background-color: #ffffff82;
+      position: absolute;
+      z-index: 1;
+    }
+
+    .box::before {
+      top: 0;
+    }
+
+    .box::after {
+      bottom: 0;
+    }
+
+    .subDiv {
+      width: 100px;
+      height: 52px;
+      background-color: rgb(224, 32, 32);
+      border: 1px green solid;
+      margin: 20px;
+      opacity: 1;
+      transition: all 0.3s ease-in;
+    }
+
+    .hidden {
+      opacity: 0;
+      transform: translateX(100px);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">
+    <div id="scrollParent">
+      <div style="margin-top: 100px;">
+        <div class="subDiv hidden"></div>
+        <div class="subDiv hidden"></div>
+        <div class="subDiv hidden"></div>
+        <div class="subDiv hidden"></div>
+        <div class="subDiv hidden"></div>
+        <div class="subDiv hidden"></div>
+        <div class="subDiv hidden"></div>
+        <div class="subDiv hidden"></div>
+        <div class="subDiv hidden"></div>
+        <div class="subDiv hidden"></div>
+        <div class="subDiv hidden"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <script type="module" src="./index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>目录</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .navigation__list {
+      list-style-type: none;
+      padding-left: 0;
+      font-size: 1.2em;
+      margin: 0;
+    }
+
+    .navigation__list li {
+      padding: 0 15px;
+      background-color: #f9f9f9;
+      transition: padding 200ms ease-in;
+    }
+
+    .navigation__list li:nth-child(odd) {
+      background-color: #eee;
+    }
+
+    .navigation__list li:hover {
+      padding-left: 15px;
+
+    }
+
+    .navigation__list li a {
+      display: block;
+      padding: 8px 0;
+      color: #008eff;
+    }
+
+    .navigation__list li a:link {
+      color: #008eff;
+    }
+
+    .navigation__list li a:active {
+      color: #6ab9f7;
+    }
+
+    .navigation__list li a:visited {
+      color: #6ab9f7;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <nav class="navigation">
+      <ul class="navigation__list">
+        <template v-for="link in navigation">
+          <li><a :href="link.host" :title="link?.desc">{{link.title}}</a></li>
+        </template>
+      </ul>
+    </nav>
+  </div>
+
+
+  <script type="module">
+    import Vue from './assets/js/vue.esm.browser.min.js'
+    import navigationData from './navigationData.js'
+
+    const app = new Vue({
+      el: '#app',
+      data() {
+        return {
+          navigation: []
+        }
+      },
+
+      created() {
+        this.navigation = navigationData
+      }
+    })
+  </script>
+</body>
+
+</html>

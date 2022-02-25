@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pull-refresh</title>
+  <style>
+    #pull {
+      border: 1px red solid;
+      height: 1000px
+    }
+  </style>
+</head>
+<body>
+  <div id="pull">
+
+  </div>
+
+  <script src="./pull-refresh.js"></script>
+  <script>
+    let pull = new pullRefresh(document.getElementById("pull"))
+    pull.onRefresh = function() {
+        setTimeout(()=> {
+          this.refreshed()
+        }, 2000)
+    }
+
+    pull.onPulling = function(distance, status) {
+      console.log(status)
+    }
+  
+  </script>
+</body>
+</html>

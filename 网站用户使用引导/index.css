@@ -1,0 +1,229 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  height: 100%;
+}
+
+nav {
+  min-width: 600px;
+}
+
+nav .left {
+  position: absolute;
+  left: 0;
+  z-index: 1;
+  height: 60px;
+  padding-left: 24px;
+}
+
+nav .left ul {
+  padding: 0px;
+  margin: 0;
+  font-size: 0;
+}
+
+nav .left ul li {
+  font: 13px/23px Arial, sans-serif;
+  color: #222;
+  list-style: none;
+  display: inline-block;
+  margin-right: 31px;
+  position: relative;
+  line-height: 60px;
+}
+
+nav .left ul li a {
+  text-decoration: none;
+}
+
+nav .left ul li a:visited {
+  color: #222;
+}
+
+nav .left ul li a:hover {
+  color: rgb(47, 172, 255);
+}
+
+nav .left ul li a:hover + .more-button {
+  display: block;
+}
+
+nav .left .more-button {
+  position: absolute;
+  right: 0;
+  z-index: 1;
+  top: 35px;
+  width: 300px;
+  padding: 15px 10px;
+  border-radius: 15px;
+  box-shadow: 0 2px 9px 0 #33333347;
+  display: none;
+}
+
+.left .more-button .button-item {
+  width: 50px;
+  height: 60px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  margin: 10px;
+  display: inline-block;
+}
+
+.left .more-button-tomore {
+  color: #a9a9a9;
+  text-align: center;
+}
+
+nav .right {
+  position: absolute;
+  right: 0;
+  font: 13px/23px Arial, sans-serif;
+  color: #222;
+  padding: 15px;
+}
+
+nav .right > div {
+  margin: 0 16px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.weather-icon {
+  width: 23px;
+  height: 23px;
+  display: inline-block;
+  background-size: 100% 100%;
+  margin-right: 4px;
+  vertical-align: bottom;
+}
+
+.show-airParm {
+  color: #fff;
+  padding: 0 6px;
+  border-radius: 20px;
+  font-size: 11px;
+  background-color: #40c057;
+  vertical-align: bottom;
+}
+
+.user .photo {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid #4e71f2;
+  display: inline-block;
+}
+
+.user .photo img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  padding: 2px;
+  vertical-align: middle;
+}
+
+main {
+  width: 622px;
+  height: 40%;
+  margin: 0 auto;
+  position: relative;
+}
+
+.main {
+  position: absolute;
+  bottom: 0;
+}
+
+.main img {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+
+.search-form span {
+  vertical-align: middle;
+  display: inline-block;
+}
+
+.search-form {
+  font-size: 0;
+}
+
+.search-form .input-box {
+  position: relative;
+}
+
+.search-form .input-box input {
+  width: 446px;
+  padding: 12px 46px 12px 12px;
+  border: 2px solid #c4c7ce;
+  border-right-width: 0;
+  border-radius: 10px 0 0 10px;
+  font-size: 16px;
+  height: 16px;
+}
+
+.search-form .input-box::after {
+  content: '';
+  display: inline-block;
+  background: #fff
+    url(https://dss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/searchbox/nicon-10750f3f7d.png)
+    no-repeat;
+  background-position: 0 -51px;
+  width: 24px;
+  height: 20px;
+
+  position: absolute;
+  right: 8px;
+  top: 12px;
+}
+
+.search-form .input-box::after:hover {
+  background-position: 0 -71px;
+}
+
+.search-form #search-input:focus {
+  border-color: #4e6ef2;
+  outline: 0;
+}
+
+.search-form .psubmit input {
+  width: 108px;
+  height: 44px;
+  border: 0;
+  font-size: 17px;
+  color: #fff;
+  border-radius: 0 10px 10px 0;
+  background-color: #4e6ef2;
+}
+
+.site-footer {
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+  position: fixed;
+  bottom: 0;
+  padding: 15px;
+  min-width: 800px;
+  overflow: hidden;
+  font-family: 'PingFang SC', Arial, 'Microsoft YaHei', sans-serif;
+}
+
+.site-footer span {
+  color: #bbb;
+  margin: 0px 10px;
+}
+
+.site-footer span a {
+  text-decoration: none;
+}
+
+.site-footer span a:visited {
+  color: #bbb;
+}
+
+.site-footer span a:hover {
+  color: #333;
+}

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #progresslist label {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 上传进度列表 -->
+  <div id="progresslist"></div>
+
+  <!-- 文件选择器 -->
+  <input multiple type="file" name="file" id="fileid">
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="./js/uploadFileAsSlice-browser.js"></script>
+  <script>
+    // import uploadFileAsSlice from './js/uploadFileAsSlice-ems.js';
+    let inputFile = document.querySelector('#fileid');
+
+    // 文件选择事件处理
+    inputFile.addEventListener('change', (e) => {
+      const files = Array.from(e.target.files);
+
+      // 循环上传多个文件
+      files.forEach((file, index) => {
+        // 以切片上传一个文件
+        uploadFileAsSlice({
+          file,
+
+          // 上传
+          onUpload(formData, context) {
+            return axios.post('http://www.test.com/server/index.php', formData);
+          },
+
+          // 文件上传进度回调
+          onProgress: handlerProgress(index),
+
+          // 文件上传完成回调
+          onDone(res) {
+            console.log(res)
+          }
+        })
+      })
+
+    })
+
+
+    /** 
+     * 创建一个处理上传进度闭包函数
+     * 
+     * @param {any} index 一个可以表示上传任务唯一性的标识
+     * @returns {Function} 返回闭包函数，用来接收和处理上传进度
+    */
+    function handlerProgress(index) {
+      let { progress, label } = createProgressDom('progress' + index);
+
+      return function (percent) {
+        // 更新上传进度
+        progress.value = percent;
+
+        // 如果上传结束删除此进度条
+        if (percent >= 100) {
+          setTimeout(() => {
+            label.remove();
+            progress = null;
+            label = null;
+          }, 1000)
+        }
+      }
+    }
+
+    /**
+     * 创建进度条页面元素
+     * 
+     * @param {String} progressId progressd的id属性值
+     * returns {Object}
+     */
+    function createProgressDom(progressId) {
+      // 创建 label 用于显示进度条描述
+      let label = document.createElement('label');
+      label.textContent = progressId;
+
+      // 创建 progress 元素
+      let progress = document.createElement('progress');
+      progress.value = 0;
+      progress.max = 100;
+      progress.id = progressId;
+
+      // 将进度条装进 label 中
+      label.appendChild(progress);
+
+      // 向上传列表追加新的进度条
+      let progresslist = document.querySelector('#progresslist');
+      progresslist.appendChild(label);
+
+      return { progress, label };
+    }
+
+
+  </script>
+</body>
+
+</html>

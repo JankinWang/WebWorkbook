@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button id="countButton">count 0</button>
+
+  <script src="./index.js"></script>
+  <script>
+    initVue({
+      data: {
+        foo: 1,
+        count: 0,
+        fullName: 'wzk',
+      },
+
+      computed: {
+        counter() {
+          console.log(this.data.count);
+          countButton.innerHTML = `count ${this.data.count}`;
+        }
+      },
+
+      created() {
+        const countButton = document.querySelector('#countButton');
+        countButton.addEventListener('click', () => {
+          this.data.count++;
+        })
+      }
+    }
+)
+
+  </script>
+</body>
+
+</html>

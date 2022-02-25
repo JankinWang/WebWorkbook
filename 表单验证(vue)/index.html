@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>表单验证</title>
+  <style>
+    ul.error{
+      color: red;
+      font-size: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <form submit="onSubmit">
+      <input type="text" v-model="name"> 名字 <br>
+      <input type="number" v-model="age"> 年龄
+
+      <ul class="error">
+        <li v-for="msg in $v.error">{{msg}}</li>
+      </ul>
+    </form>
+  </div>
+  <script type="module" src="./index.js"></script>
+</body>
+
+</html>
