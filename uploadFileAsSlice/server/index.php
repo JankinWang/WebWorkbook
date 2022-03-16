@@ -36,7 +36,6 @@ if (!empty($_REQUEST['debug'])) {
   }
 }
 
-
 @set_time_limit(0);
 
 $targetDir = 'uploads/file_material_tmp';
@@ -68,8 +67,8 @@ $oldName = $fileName;
 $filePath = $targetDir . DIRECTORY_SEPARATOR . $fileName;
 // $uploadPath = $uploadDir . DIRECTORY_SEPARATOR . $fileName;
 // Chunking might be enabled
-$chunk = isset($_REQUEST["chunk"]) ? intval($_REQUEST["chunk"]) : 0;
-$chunks = isset($_REQUEST["chunks"]) ? intval($_REQUEST["chunks"]) : 1;
+$chunk_index = isset($_REQUEST["index"]) ? intval($_REQUEST["index"]) : 0;
+$chunk_count = isset($_REQUEST["count"]) ? intval($_REQUEST["count"]) : 1;
 
 // Remove old temp files
 if ($cleanupTargetDir) {
@@ -79,7 +78,7 @@ if ($cleanupTargetDir) {
   while (($file = readdir($dir)) !== false) {
     $tmpfilePath = $targetDir . DIRECTORY_SEPARATOR . $file;
     // If temp file is current file proceed to the next
-    if ($tmpfilePath == "{$filePath}_{$chunk}.part" || $tmpfilePath == "{$filePath}_{$chunk}.parttmp") {
+    if ($tmpfilePath == "{$filePath}_{$chunk_index}.part" || $tmpfilePath == "{$filePath}_{$chunk_index}.parttmp") {
       continue;
     }
     // Remove temp file if it is older than the max age and is not the current file
@@ -92,7 +91,7 @@ if ($cleanupTargetDir) {
 
 
 // Open temp file
-if (!$out = @fopen("{$filePath}_{$chunk}.parttmp", "wb")) {
+if (!$out = @fopen("{$filePath}_{$chunk_index}.parttmp", "wb")) {
   show_json(102, 'Failed to open output stream.');
 }
 
@@ -118,10 +117,10 @@ while ($buff = fread($in, 4096)) {
 }
 @fclose($out);
 @fclose($in);
-rename("{$filePath}_{$chunk}.parttmp", "{$filePath}_{$chunk}.part");
+rename("{$filePath}_{$chunk_index}.parttmp", "{$filePath}_{$chunk_index}.part");
 $index = 0;
 $done = true;
-for ($index = 0; $index < $chunks; $index++) {
+for ($index = 0; $index < $chunk_count; $index++) {
   if (!file_exists("{$filePath}_{$index}.part")) {
     $done = false;
     break;
@@ -138,7 +137,7 @@ if ($done) {
     show_json(102, 'Failed to open output stream. done');
   }
   if (flock($out, LOCK_EX)) {
-    for ($index = 0; $index < $chunks; $index++) {
+    for ($index = 0; $index < $chunk_count; $index++) {
       if (!$in = @fopen("{$filePath}_{$index}.part", "rb")) {
         break;
       }

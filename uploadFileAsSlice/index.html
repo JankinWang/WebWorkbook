@@ -20,37 +20,27 @@
   <!-- 文件选择器 -->
   <input multiple type="file" name="file" id="fileid">
 
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src="./js/uploadFileAsSlice-browser.js"></script>
+  <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.26.1/axios.min.js"></script>
+  <script src="./js/uploadFileAsSliceClass.js"></script>
   <script>
-    // import uploadFileAsSlice from './js/uploadFileAsSlice-ems.js';
     let inputFile = document.querySelector('#fileid');
 
     // 文件选择事件处理
     inputFile.addEventListener('change', (e) => {
-      const files = Array.from(e.target.files);
+      const files = Array.from(e.target.files),
+        // 创建实例
+        supld = new SliceUpload(files)
 
-      // 循环上传多个文件
-      files.forEach((file, index) => {
-        // 以切片上传一个文件
-        uploadFileAsSlice({
-          file,
-
-          // 上传
-          onUpload(formData, context) {
-            return axios.post('http://www.test.com/server/index.php', formData);
-          },
-
-          // 文件上传进度回调
-          onProgress: handlerProgress(index),
-
-          // 文件上传完成回调
-          onDone(res) {
-            console.log(res)
-          }
-        })
+      let handle = handlerProgress()
+      supld.on('progress', (e) => {
+        handle(e)
       })
 
+      supld.on('doneAll', (e) => {
+        handle = null
+      })
+
+      supld.upload('http://www.test.com/index.php')
     })
 
 
@@ -60,20 +50,26 @@
      * @param {any} index 一个可以表示上传任务唯一性的标识
      * @returns {Function} 返回闭包函数，用来接收和处理上传进度
     */
-    function handlerProgress(index) {
-      let { progress, label } = createProgressDom('progress' + index);
+    function handlerProgress() {
+      const progressLib = new Map()
 
-      return function (percent) {
+      return function ({ progress, done, response, filename, fileId }) {
+        if (!progressLib.has(fileId)) {
+          const el = createProgressDom(filename + fileId);
+          progressLib.set(fileId, el)
+        }
+        const { progressEl, label } = progressLib.get(fileId)
+
         // 更新上传进度
-        progress.value = percent;
+        progressEl.value = progress;
 
         // 如果上传结束删除此进度条
-        if (percent >= 100) {
-          setTimeout(() => {
-            label.remove();
-            progress = null;
-            label = null;
-          }, 1000)
+        if (done) {
+          // setTimeout(() => {
+          //   label.remove();
+          //   progressEl = null;
+          //   label = null;
+          // }, 1000)
         }
       }
     }
@@ -90,19 +86,19 @@
       label.textContent = progressId;
 
       // 创建 progress 元素
-      let progress = document.createElement('progress');
-      progress.value = 0;
-      progress.max = 100;
-      progress.id = progressId;
+      let progressEl = document.createElement('progress');
+      progressEl.value = 0;
+      progressEl.max = 100;
+      progressEl.id = progressId;
 
       // 将进度条装进 label 中
-      label.appendChild(progress);
+      label.appendChild(progressEl);
 
       // 向上传列表追加新的进度条
       let progresslist = document.querySelector('#progresslist');
       progresslist.appendChild(label);
 
-      return { progress, label };
+      return { progressEl, label };
     }
 
 
