@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,10 +9,12 @@
   <style>
     #pull {
       border: 1px red solid;
-      height: 1000px
+      height: 1000px;
+      max-width: 600px;
     }
   </style>
 </head>
+
 <body>
   <div id="pull">
 
@@ -20,16 +23,17 @@
   <script src="./pull-refresh.js"></script>
   <script>
     let pull = new pullRefresh(document.getElementById("pull"))
-    pull.onRefresh = function() {
-        setTimeout(()=> {
-          this.refreshed()
-        }, 2000)
+    pull.onRefresh = function () {
+      setTimeout(() => {
+        this.refreshed()
+      }, 2000)
     }
 
-    pull.onPulling = function(distance, status) {
+    pull.onPulling = function (distance, status) {
       console.log(status)
     }
-  
+
   </script>
 </body>
+
 </html>
