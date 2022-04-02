@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .assistor {
+      height: 200px;
+      position: relative;
+    }
+
+    #scrollParent {
+      height: 200px;
+      overflow-y: scroll;
+      border: 1px red solid;
+    }
+
+    #scrollParent p {
+      margin: 5px 0;
+      line-height: 2em;
+      background-color: antiquewhite;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="assistor">
+    <div id="scrollParent">
+      <p>一行</p>
+      <p>一行</p>
+      <p>一行</p>
+      <p>一行</p>
+      <p>一行</p>
+      <p>一行</p>
+      <p>一行</p>
+      <p id="isShow">一行 test</p>
+    </div>
+  </div>
+
+
+  <script src="./isInViewPort.js"></script>
+  <script>
+
+    const child = document.getElementById('isShow')
+    const scrollParent = selectScrollParent(child)
+
+    scrollParent.addEventListener('scroll', () => {
+      requestAnimationFrame(() => {
+        const isshow = isInViewPortOfOne(scrollParent, child);
+        console.log(isshow);
+      })
+    })
+  </script>
+</body>
+
+</html>
